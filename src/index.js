@@ -5,7 +5,7 @@ const app = express();
 
 app.use(express.static('public'));  // this directory is available to everyone.
 app.get('/',(req,res) => {
-   res.send(renderer()); 
+   res.send(renderer(req)); 
 });
 
 app.listen(3000,() => {
