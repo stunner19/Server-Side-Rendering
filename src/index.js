@@ -1,11 +1,17 @@
 import express from 'express';
 import renderer from './helpers/renderer';
+import createStore from './helpers/createStore';
 
 const app = express();
 
 app.use(express.static('public'));  // this directory is available to everyone.
 app.get('*',(req,res) => {  // * means look for all routes, instead of just a couple of routes.
-   res.send(renderer(req)); 
+    const store = createStore();
+
+    // some logic to initialize and load data into the store.
+    // load store first and then call renderer.
+    
+    res.send(renderer(req,store)); 
 });
 
 app.listen(3000,() => {
