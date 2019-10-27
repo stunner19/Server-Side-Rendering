@@ -3,13 +3,18 @@ import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
 import Routes from '../client/Routes';
 import { Provider } from 'react-redux';
+import { renderRoutes } from 'react-router-config';
+// renderRoutes is used for the Routes definition of the array that we have changed. 
 
 export default (req,store) => {
     // StaticRouter is used for the server as BrowserRouter is used for the browser.
     const content = renderToString(
         <Provider store = {store}>
             <StaticRouter location = {req.path} context = {{}}>
-                <Routes />
+                <div>
+                    {renderRoutes(Routes)}
+                    {/* See how the syntax gets changed now. */}
+                </div>
             </StaticRouter>
         </Provider>
     );
