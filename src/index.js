@@ -1,3 +1,5 @@
+// babel-polyfill is used for the regenerator runtime. Needs to be included on both the client and the server side.
+import 'babel-polyfill';
 import express from 'express';
 import renderer from './helpers/renderer';
 import createStore from './helpers/createStore';
