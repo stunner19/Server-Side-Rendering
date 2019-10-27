@@ -90,6 +90,12 @@ var _createStore = __webpack_require__(9);
 
 var _createStore2 = _interopRequireDefault(_createStore);
 
+var _reactRouterConfig = __webpack_require__(19);
+
+var _Routes = __webpack_require__(8);
+
+var _Routes2 = _interopRequireDefault(_Routes);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // babel-polyfill is used for the regenerator runtime. Needs to be included on both the client and the server side.
@@ -100,10 +106,16 @@ app.get('*', function (req, res) {
     // * means look for all routes, instead of just a couple of routes.
     var store = (0, _createStore2.default)();
 
-    // some logic to initialize and load data into the store.
-    // load store first and then call renderer.
+    var promises = (0, _reactRouterConfig.matchRoutes)(_Routes2.default, req.path).map(function (_ref) {
+        var route = _ref.route;
 
-    res.send((0, _renderer2.default)(req, store));
+        return route.loadData ? route.loadData(store) : null;
+    });
+    // req.path is the path that the user is trying to visit and returs an array of components about to be rendered.
+
+    Promise.all(promises).then(function () {
+        res.send((0, _renderer2.default)(req, store));
+    });
 });
 
 app.listen(3000, function () {
@@ -247,6 +259,7 @@ exports.default = [{
     component: _Home2.default,
     exact: true
 }, {
+    loadData: _UsersList.loadData,
     path: '/users',
     component: _UsersList2.default
 }];
@@ -417,6 +430,7 @@ module.exports = require("axios");
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.loadData = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -486,6 +500,11 @@ function mapStateToProps(state) {
     };
 }
 
+function loadData(store) {
+    return store.dispatch((0, _actions.fetchUsers)());
+}
+
+exports.loadData = loadData;
 exports.default = (0, _reactRedux.connect)(mapStateToProps, { fetchUsers: _actions.fetchUsers })(UsersList);
 
 /***/ }),
