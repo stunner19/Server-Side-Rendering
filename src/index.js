@@ -11,14 +11,14 @@ const app = express();
 
 app.use('/api',proxy('http://react-ssr-api.herokuapp.com',{
     proxyReqOptDecorator(opts){
-        opts.header['x-forwarded-host'] = 'localhost:3000';
+        opts.headers['x-forwarded-host'] = 'localhost:3000';
         return opts;
     }
 }));    // all routes with /api will be routed to the ssr url. The second parameter is optional.
 
 app.use(express.static('public'));  // this directory is available to everyone.
 app.get('*',(req,res) => {  // * means look for all routes, instead of just a couple of routes.
-    const store = createStore();
+    const store = createStore(req);
     
     const promises = matchRoutes(Routes,req.path).map(({ route }) => {
         return route.loadData ? route.loadData(store) : null;
