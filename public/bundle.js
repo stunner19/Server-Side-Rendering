@@ -39780,18 +39780,16 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var Home = function Home() {
     return _react2.default.createElement(
         'div',
-        null,
+        { className: 'center-align', style: { marginTop: '200px' } },
         _react2.default.createElement(
-            'div',
+            'h3',
             null,
-            'Welcome There!'
+            'Welcome'
         ),
         _react2.default.createElement(
-            'button',
-            { onClick: function onClick() {
-                    return console.log('Hi there!');
-                } },
-            'Press me!'
+            'p',
+            null,
+            'Checkout these awesome features.'
         )
     );
 };
@@ -39950,19 +39948,73 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(46);
 
+var _reactRedux = __webpack_require__(106);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = function () {
+var Header = function Header(_ref) {
+    var auth = _ref.auth;
+
+
+    var authButton = auth ? _react2.default.createElement(
+        'a',
+        { href: '/api/logout' },
+        'Logout'
+    ) : _react2.default.createElement(
+        'a',
+        { href: '/api/auth/google' },
+        'Login'
+    );
+
     return _react2.default.createElement(
-        'div',
+        'nav',
         null,
         _react2.default.createElement(
-            _reactRouterDom.Link,
-            { to: '/' },
-            'React SSR'
+            'div',
+            { className: 'nav-wrapper' },
+            _react2.default.createElement(
+                _reactRouterDom.Link,
+                { to: '/', className: 'brand-logo' },
+                'React SSR'
+            ),
+            _react2.default.createElement(
+                'ul',
+                { className: 'right' },
+                _react2.default.createElement(
+                    'li',
+                    null,
+                    _react2.default.createElement(
+                        _reactRouterDom.Link,
+                        { to: '/users' },
+                        'Users'
+                    )
+                ),
+                _react2.default.createElement(
+                    'li',
+                    null,
+                    _react2.default.createElement(
+                        _reactRouterDom.Link,
+                        { to: '/admins' },
+                        'Admins'
+                    )
+                ),
+                _react2.default.createElement(
+                    'li',
+                    null,
+                    authButton
+                )
+            )
         )
     );
 };
+
+function mapStateToProps(_ref2) {
+    var auth = _ref2.auth;
+
+    return { auth: auth };
+}
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps)(Header);
 
 /***/ }),
 /* 488 */
