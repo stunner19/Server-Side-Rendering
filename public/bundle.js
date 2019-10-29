@@ -25975,17 +25975,23 @@ var _HomePage = __webpack_require__(484);
 
 var _HomePage2 = _interopRequireDefault(_HomePage);
 
+var _App = __webpack_require__(486);
+
+var _App2 = _interopRequireDefault(_App);
+
 var _UsersListPage = __webpack_require__(485);
 
 var _UsersListPage2 = _interopRequireDefault(_UsersListPage);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = [_extends({}, _HomePage2.default, { // equivalent to component : Homepage. Check the export statement in the Homepage component.
-    path: '/',
-    exact: true
-}), _extends({}, _UsersListPage2.default, {
-    path: '/users'
+exports.default = [_extends({}, _App2.default, { // App will always be displayed on the screen.
+    routes: [_extends({}, _HomePage2.default, { // equivalent to component : Homepage. Check the export statement in the Homepage component.
+        path: '/',
+        exact: true
+    }), _extends({}, _UsersListPage2.default, {
+        path: '/users'
+    })]
 })];
 
 /***/ }),
@@ -39841,6 +39847,39 @@ function loadData(store) {
 exports.default = {
     loadData: loadData,
     component: (0, _reactRedux.connect)(mapStateToProps, { fetchUsers: _actions.fetchUsers })(UsersList)
+};
+
+/***/ }),
+/* 486 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = __webpack_require__(3);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterConfig = __webpack_require__(478);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var App = function App(_ref) {
+    var route = _ref.route;
+
+    return _react2.default.createElement(
+        'div',
+        null,
+        (0, _reactRouterConfig.renderRoutes)(route.routes)
+    );
+};
+
+exports.default = {
+    component: App
 };
 
 /***/ })
