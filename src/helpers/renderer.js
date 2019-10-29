@@ -7,11 +7,11 @@ import serialize  from 'serialize-javascript';
 import { renderRoutes } from 'react-router-config';
 // renderRoutes is used for the Routes definition of the array that we have changed. 
 
-export default (req,store) => {
+export default (req,store,context) => {
     // StaticRouter is used for the server as BrowserRouter is used for the browser.
     const content = renderToString(
         <Provider store = {store}>
-            <StaticRouter location = {req.path} context = {{}}>
+            <StaticRouter location = {req.path} context = {context}>
                 <div>
                     {renderRoutes(Routes)}
                     {/* See how the syntax gets changed now. */}
